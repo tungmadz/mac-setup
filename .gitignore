@@ -1,0 +1,11 @@
+# Personal additions, never committed
+Brewfile.local
+
+# Secrets
+.env
+.env.*
+*.pem
+*.key
+*secret*
+
+.DS_Store

@@ -1,0 +1,10 @@
+# cli: extra command-line tools
+brew "direnv"
+brew "tmux"
+brew "tree"
+brew "watchman"
+brew "yt-dlp"
+brew "ffmpeg"
+brew "bun"
+brew "pnpm"
+brew "yarn"

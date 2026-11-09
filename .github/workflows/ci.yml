@@ -1,0 +1,24 @@
+name: ci
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install checkers
+        run: brew install shellcheck gitleaks
+      - name: Shellcheck
+        run: shellcheck bootstrap.sh modules/macos.sh
+      - name: Dry run
+        run: ./bootstrap.sh --dry-run apps cli dev macos
+      - name: Every formula and cask exists
+        run: |
+          for f in Brewfile modules/*.Brewfile; do
+            brew bundle list --file "$f" --formula | xargs brew info --formula >/dev/null
+            brew bundle list --file "$f" --cask | xargs brew info --cask >/dev/null
+          done
+      - name: Scan for secrets
+        run: gitleaks detect --no-banner
